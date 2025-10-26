@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-deployment
-  namespace: python
   labels:
     app: python-app
 spec:
-  replicas: 3  # 👈 creates 2 pods
+  replicas: 2
   selector:
     matchLabels:
       app: python-app
@@ -16,10 +15,8 @@ spec:
         app: python-app
     spec:
       containers:
-        - name: python-container
-          image: python:3.10-alpine
-          command: ["python", "-m", "http.server", "8080"]
-          ports:
-            - containerPort: 8080
-
-~
+      - name: python-container
+        image: python:3.11-slim
+        command: ["python", "-m", "http.server", "8080"]
+        ports:
+        - containerPort: 8080
