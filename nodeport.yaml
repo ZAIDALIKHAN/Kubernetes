@@ -1,14 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace : python
-  name: python-nodeport
+  name: python-service
 spec:
-  selector:
-    app: python-http
-  ports:
-    - protocol: TCP
-      port: 8080        # internal port
-      targetPort: 8080  # container port
-      nodePort: 30080   # port on the node you can access
   type: NodePort
+  selector:
+    app: python-app
+  ports:
+    - port: 8080         # Cluster-internal port
+      targetPort: 8080   # Container port inside the Pod
+      nodePort: 30081    # Port exposed on each worker node (and via kind extraPortMappings to EC2)
